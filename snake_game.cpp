@@ -1,14 +1,11 @@
 #include "snake_game.h"
+#include "cls.h"
 
 int x, y, fruit_x, fruit_y, score;
 int tail_x[100], tail_y[100];
 int tail_length;
 Direction dir;
 bool game_over;
-
-void clrscr() {
-    system("cls");
-}
 
 void Setup() {
     game_over = false;
@@ -22,7 +19,7 @@ void Setup() {
 }
 
 void Draw() {
-    clrscr();
+    cls();
 
     for (int i = 0; i < width + 2; i++)
         cout << "-";
@@ -38,14 +35,14 @@ void Draw() {
             else if (i == fruit_y && j == fruit_x)
                 cout << "#";
             else {
-                bool printTail = false;
+                bool print_tail = false;
                 for (int k = 0; k < tail_length; k++) {
                     if (tail_x[k] == j && tail_y[k] == i) {
                         cout << "o";
-                        printTail = true;
+                        print_tail = true;
                     }
                 }
-                if (!printTail)
+                if (!print_tail)
                     cout << " ";
             }
 
@@ -134,7 +131,7 @@ void Logic() {
 }
 
 void Frame_Delay() {
-    Sleep(50);
+    Sleep(20);
 }
 
 int main() {

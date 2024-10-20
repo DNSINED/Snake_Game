@@ -28,6 +28,5 @@ void Draw();
 void Input();
 void Logic();
 void Frame_Delay();
-void clrscr();  // Clears the console screen
 
 #endif // SNAKE_GAME_H
