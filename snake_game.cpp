@@ -1,5 +1,5 @@
 #include "snake_game.h"
-#include "cls.h"
+
 
 int x, y, fruit_x, fruit_y, score;
 int tail_x[100], tail_y[100];
