@@ -1,16 +1,21 @@
 #ifndef SNAKE_GAME_H
 #define SNAKE_GAME_H
 
+#include <windows.h>
 #include <iostream>
 #include <conio.h>
-#include <windows.h>
 #include <ctime>
+#include <cstdlib>
+#include <cstring>
+#include <random>
 
 using namespace std;
 
 // Game boundary
 const int width = 80;
 const int height = 20;
+
+void Set_Cursor_Position(int x, int y);
 
 // Snake and fruit variables
 extern int x, y, fruit_x, fruit_y, score;

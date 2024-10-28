@@ -19,31 +19,34 @@ void Setup() {
 }
 
 void Draw() {
-    cls();
+    // Set the cursor to the top-left corner (0,0)
+    Set_Cursor_Position(0, 0);
 
+    // Draw the top border
     for (int i = 0; i < width + 2; i++)
         cout << "-";
     cout << endl;
 
+    // Draw the game area with snake, fruit, and borders
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
             if (j == 0)
                 cout << "|";
 
             if (i == y && j == x)
-                cout << "O";
+                cout << "O";  // Snake head
             else if (i == fruit_y && j == fruit_x)
-                cout << "#";
+                cout << "#";  // Fruit
             else {
                 bool print_tail = false;
                 for (int k = 0; k < tail_length; k++) {
                     if (tail_x[k] == j && tail_y[k] == i) {
-                        cout << "o";
+                        cout << "o";  // Snake body
                         print_tail = true;
                     }
                 }
                 if (!print_tail)
-                    cout << " ";
+                    cout << " ";  // Empty space
             }
 
             if (j == width - 1)
@@ -52,12 +55,15 @@ void Draw() {
         cout << endl;
     }
 
+    // Draw the bottom border
     for (int i = 0; i < width + 2; i++)
         cout << "-";
     cout << endl;
 
+    // Update the score display
     cout << "Score: " << score << endl;
 }
+
 
 void Input() {
     if (_kbhit()) {
@@ -130,8 +136,15 @@ void Logic() {
     }
 }
 
+void Set_Cursor_Position(int x, int y) {
+    static const HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+    cout.flush();
+    COORD coord = { (SHORT)x, (SHORT)y };
+    SetConsoleCursorPosition(hOut, coord);
+}
+
 void Frame_Delay() {
-    Sleep(20);
+    Sleep(2);
 }
 
 int main() {
@@ -140,10 +153,12 @@ int main() {
 
     while (!game_over) {
         Draw();
+        Frame_Delay();
         Input();
         Logic();
-        Frame_Delay();
     }
+
+    Set_Cursor_Position(0, height + 3);
 
     cout << "Game Over!" << endl;
     return 0;
