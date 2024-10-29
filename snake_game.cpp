@@ -31,42 +31,49 @@ void Setup() {
 
 void Draw() {
     Set_Cursor_Position(0, 0);
+    Set_Console_Colour(PURPLE);
 
-    for (int i = 0; i < width + 2; i++)
+    for (int i = 0; i < width; i++)
         cout << "-";
     cout << endl;
 
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
-            if (j == 0)
-                cout << "|";
-
-            if (i == y && j == x)
+            if (j == 0 || j == width - 1) {
+                Set_Console_Colour(PURPLE);
+            cout << "|";
+            }
+            else if (i == y && j == x){
+                Set_Console_Colour(GREEN);
                 cout << "O";
-            else if (i == fruit_y && j == fruit_x)
-                cout << "#";
+            }
+            else if (i == fruit_y && j == fruit_x){
+                Set_Console_Colour(RED);
+                cout << "@";
+            }
             else {
                 bool print_tail = false;
                 for (int k = 0; k < tail_length; k++) {
                     if (tail_x[k] == j && tail_y[k] == i) {
-                        cout << "o";  // Snake body
+                        Set_Console_Colour(GREEN);
+                        cout << "o";
                         print_tail = true;
+                        break;
                     }
                 }
                 if (!print_tail)
                     cout << " ";
             }
-
-            if (j == width - 1)
-                cout << "|";
         }
         cout << endl;
     }
 
-    for (int i = 0; i < width + 2; i++)
+    Set_Console_Colour(PURPLE);
+    for (int i = 0; i < width; i++)
         cout << "-";
     cout << endl;
 
+    Set_Console_Colour(YELLOW);
     cout << "Score: " << score << endl;
 }
 
@@ -86,7 +93,7 @@ void Input() {
             case 's':
                 dir = DOWN;
                 break;
-            case 'x':
+            case 'k':
                 game_over = true;
                 break;
         }
@@ -154,12 +161,10 @@ void Frame_Delay() {
 }
 
 int main() {
-    SetConsoleOutputCP(CP_UTF8);
     srand(time(0));
 
     Setup();
     Hide_Cursor();
-    Set_Console_Colour(RED);
     while (!game_over) {
         Draw();
         Input();
