@@ -1,5 +1,23 @@
 #include "snake_game.h"
 
+int x, y, fruit_x, fruit_y, score;
+int tail_x[100], tail_y[100];
+int tail_length;
+bool game_over;
+Direction dir;
+
+
+void Hide_Cursor() {
+    CONSOLE_CURSOR_INFO cursor_info;
+    cursor_info.bVisible = false;
+    cursor_info.dwSize = 20;
+    SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursor_info);
+}
+
+void Set_Console_Colour(int colour) {
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), colour);
+}
+
 void Setup() {
     game_over = false;
     dir = STOP;
@@ -12,24 +30,21 @@ void Setup() {
 }
 
 void Draw() {
-    // Set the cursor to the top-left corner (0,0)
     Set_Cursor_Position(0, 0);
 
-    // Draw the top border
     for (int i = 0; i < width + 2; i++)
         cout << "-";
     cout << endl;
 
-    // Draw the game area with snake, fruit, and borders
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
             if (j == 0)
                 cout << "|";
 
             if (i == y && j == x)
-                cout << "O";  // Snake head
+                cout << "O";
             else if (i == fruit_y && j == fruit_x)
-                cout << "#";  // Fruit
+                cout << "#";
             else {
                 bool print_tail = false;
                 for (int k = 0; k < tail_length; k++) {
@@ -39,7 +54,7 @@ void Draw() {
                     }
                 }
                 if (!print_tail)
-                    cout << " ";  // Empty space
+                    cout << " ";
             }
 
             if (j == width - 1)
@@ -48,12 +63,10 @@ void Draw() {
         cout << endl;
     }
 
-    // Draw the bottom border
     for (int i = 0; i < width + 2; i++)
         cout << "-";
     cout << endl;
 
-    // Update the score display
     cout << "Score: " << score << endl;
 }
 
@@ -130,30 +143,29 @@ void Logic() {
 }
 
 void Set_Cursor_Position(int x, int y) {
-    static const HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
-    cout.flush();
-    COORD coord = { (SHORT)x, (SHORT)y };
-    SetConsoleCursorPosition(hOut, coord);
+    COORD cursor_pos;
+    cursor_pos.X = x;
+    cursor_pos.Y = y;
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), cursor_pos);
 }
 
 void Frame_Delay() {
-    Sleep(2);
+    Sleep(80);
 }
 
-void Set_Console_Colour(int colour) {
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), colour);
-}
 int main() {
-    //srand(time(nullptr));
+    SetConsoleOutputCP(CP_UTF8);
+    srand(time(0));
+
     Setup();
+    Hide_Cursor();
     Set_Console_Colour(RED);
     while (!game_over) {
         Draw();
-        Frame_Delay();
         Input();
         Logic();
+        Frame_Delay();
     }
-
     Set_Cursor_Position(0, height + 3);
 
     cout << "Game Over!" << endl;

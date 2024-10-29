@@ -12,7 +12,7 @@
 using namespace std;
 
 // Game boundary
-const int width = 80;
+const int width = 60;
 const int height = 20;
 
 
@@ -34,9 +34,6 @@ const unsigned short LIGHT_PURPLE = 13;
 const unsigned short LIGHT_YELLOW = 14;
 const unsigned short BRIGHT_WHITE = 15;
 
-// Function to set the cursor position
-void Set_Cursor_Position(int x, int y);
-
 // Snake and fruit variables
 extern int x, y, fruit_x, fruit_y, score;
 extern int tail_x[100], tail_y[100];
@@ -48,6 +45,9 @@ enum Direction { STOP = 0, LEFT, RIGHT, UP, DOWN };
 extern Direction dir;
 
 // Function declarations
+void Hide_Cursor();
+void Set_Console_Colour(int colour);
+void Set_Cursor_Position(int x, int y);
 void Setup();
 void Draw();
 void Input();
