@@ -147,10 +147,13 @@ void Frame_Delay() {
     Sleep(2);
 }
 
+void Set_Console_Colour(int colour) {
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), colour);
+}
 int main() {
     srand(time(nullptr));
     Setup();
-
+    Set_Console_Colour(RED);
     while (!game_over) {
         Draw();
         Frame_Delay();
