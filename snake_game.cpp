@@ -1,12 +1,5 @@
 #include "snake_game.h"
 
-
-int x, y, fruit_x, fruit_y, score;
-int tail_x[100], tail_y[100];
-int tail_length;
-Direction dir;
-bool game_over;
-
 void Setup() {
     game_over = false;
     dir = STOP;
@@ -151,7 +144,7 @@ void Set_Console_Colour(int colour) {
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), colour);
 }
 int main() {
-    srand(time(nullptr));
+    //srand(time(nullptr));
     Setup();
     Set_Console_Colour(RED);
     while (!game_over) {
