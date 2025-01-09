@@ -7,6 +7,8 @@
 #include <ctime>
 #include <cstdlib>
 #include <cstring>
+#include <chrono>
+#include <thread>
 
 using namespace std;
 
