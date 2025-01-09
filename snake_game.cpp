@@ -157,7 +157,18 @@ void Set_Cursor_Position(int x, int y) {
 }
 
 void Frame_Delay() {
-    Sleep(80);
+    static auto last_time = std::chrono::high_resolution_clock::now();
+    
+    constexpr int frame_delay_ms = 80; // 80ms = 12.5 cadre pe secunda
+
+    auto current_time = std::chrono::high_resolution_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(current_time - last_time).count();
+
+    if (elapsed < frame_delay_ms) {
+        std::this_thread::sleep_for(std::chrono::milliseconds(frame_delay_ms - elapsed));
+    }
+
+    last_time = std::chrono::high_resolution_clock::now();
 }
 
 int main() {
